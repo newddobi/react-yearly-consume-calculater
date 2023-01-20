@@ -1,35 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 
 import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 
 const NewExpense = (props) => {
-  const [isEditing, setIsEditing] = useState(false);
-
   const saveExpenseDataHandler = (enteredExpenseData) => {
-    const expenseData = {
-      ...enteredExpenseData,
-      id: Math.random().toString(),
-    };
-    props.onAddExpense(expenseData);
-    setIsEditing(false);
+    props.onAddExpense(enteredExpenseData);
+    props.setIsEditing(false);
   };
 
   const startEditingHandler = () => {
-    setIsEditing(true);
+    props.setIsEditing(true);
   };
 
   const stopEditingHandler = () => {
-    setIsEditing(false);
+    props.setIsEditing(false);
   };
 
   return (
     <div className="new-expense">
-      {!isEditing && (
-        <button onClick={startEditingHandler}>Add New Expense</button>
+      {!props.isEditing && (
+        <button onClick={startEditingHandler}>기록추가</button>
       )}
-      {isEditing && (
+      {props.isEditing && (
         <ExpenseForm
+          enteredItemId={props.enteredItemId}
+          enteredTitle={props.enteredTitle}
+          enteredAmount={props.enteredAmount}
+          enteredDate={props.enteredDate}
+          setEnteredItemId={props.setEnteredItemId}
+          setEnteredTitle={props.setEnteredTitle}
+          setEnteredAmount={props.setEnteredAmount}
+          setEnteredDate={props.setEnteredDate}
           onSaveExpenseData={saveExpenseDataHandler}
           onCancel={stopEditingHandler}
         />

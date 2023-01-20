@@ -26,24 +26,87 @@ const DUMMY_EXPENSES = [
 
 const App = () => {
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+  const [isEditing, setIsEditing] = useState(false);
+  const [enteredItemId, setEnteredItemId] = useState("");
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
 
-  const addExpenseHandler = (expense) => {
+  const saveExpenseHandler = (newExpense) => {
+    console.log("newExpense", newExpense);
+    const updateTargetItem = expenses.find(
+      (expense) => expense.id === newExpense.id
+    );
+
+    console.log("updateTargetItem", updateTargetItem);
+
+    if (updateTargetItem) {
+      setExpenses((prevExpenses) => {
+        const updateTargetItemIndex = prevExpenses.findIndex(
+          (expense) => expense.id === newExpense.id
+        );
+        const targetItem = prevExpenses[updateTargetItemIndex];
+        targetItem.title = newExpense.title;
+        targetItem.amout = newExpense.amout;
+        targetItem.date = newExpense.date;
+        return prevExpenses;
+      });
+    } else {
+      setExpenses((prevExpenses) => {
+        return [newExpense, ...prevExpenses];
+      });
+    }
+  };
+
+  const updateItemSettingHandler = (selectedItemId) => {
+    const updateTargetItem = expenses.find(
+      (expense) => expense.id === selectedItemId
+    );
+    setEnteredItemId(updateTargetItem.id);
+    setEnteredTitle(updateTargetItem.title);
+    setEnteredAmount(updateTargetItem.amount);
+
+    const month = updateTargetItem.date.toLocaleString("en-US", {
+      month: "2-digit",
+    });
+    const day = updateTargetItem.date.toLocaleString("en-US", {
+      day: "2-digit",
+    });
+    const year = updateTargetItem.date.getFullYear();
+
+    setEnteredDate(`${year}-${month}-${day}`);
+  };
+
+  const deleteItemHandler = (selectedItemId) => {
     setExpenses((prevExpenses) => {
-      return [expense, ...prevExpenses];
+      const filteredExpenses = prevExpenses.filter(
+        (item) => item.id !== selectedItemId
+      );
+      return filteredExpenses;
     });
   };
 
-  // return React.createElement(
-  //   'div',
-  //   {},
-  //   React.createElement('h2', {}, "Let's get started!"),
-  //   React.createElement(Expenses, { items: expenses })
-  // );
-
   return (
     <div>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />
+      <NewExpense
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        onAddExpense={saveExpenseHandler}
+        enteredItemId={enteredItemId}
+        enteredTitle={enteredTitle}
+        enteredAmount={enteredAmount}
+        enteredDate={enteredDate}
+        setEnteredItemId={setEnteredItemId}
+        setEnteredTitle={setEnteredTitle}
+        setEnteredAmount={setEnteredAmount}
+        setEnteredDate={setEnteredDate}
+      />
+      <Expenses
+        items={expenses}
+        setIsEditing={setIsEditing}
+        onClickItem={updateItemSettingHandler}
+        onClickDelete={deleteItemHandler}
+      />
     </div>
   );
 };

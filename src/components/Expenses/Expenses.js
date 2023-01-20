@@ -25,7 +25,12 @@ const Expenses = (props) => {
           onChangeFilter={filterChangeHandler}
         />
         <ExpensesChart expenses={filteredExpenses} />
-        <ExpensesList items={filteredExpenses} />
+        <ExpensesList
+          items={filteredExpenses}
+          setIsEditing={props.setIsEditing}
+          onClickItem={props.onClickItem}
+          onClickDelete={props.onClickDelete}
+        />
       </Card>
     </div>
   );
