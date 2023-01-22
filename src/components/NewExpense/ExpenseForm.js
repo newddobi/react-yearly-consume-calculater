@@ -44,8 +44,6 @@ const ExpenseForm = (props) => {
       return;
     }
 
-    console.log();
-
     const expenseData = {
       id: props.enteredItemId || new Date().getTime(),
       title: props.enteredTitle,

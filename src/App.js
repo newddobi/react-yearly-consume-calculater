@@ -27,18 +27,16 @@ const DUMMY_EXPENSES = [
 const App = () => {
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
   const [isEditing, setIsEditing] = useState(false);
+
   const [enteredItemId, setEnteredItemId] = useState("");
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
 
   const saveExpenseHandler = (newExpense) => {
-    console.log("newExpense", newExpense);
     const updateTargetItem = expenses.find(
       (expense) => expense.id === newExpense.id
     );
-
-    console.log("updateTargetItem", updateTargetItem);
 
     if (updateTargetItem) {
       setExpenses((prevExpenses) => {
@@ -47,7 +45,7 @@ const App = () => {
         );
         const targetItem = prevExpenses[updateTargetItemIndex];
         targetItem.title = newExpense.title;
-        targetItem.amout = newExpense.amout;
+        targetItem.amount = newExpense.amount;
         targetItem.date = newExpense.date;
         return prevExpenses;
       });
