@@ -28,7 +28,6 @@ const NewExpense = (props) => {
           enteredTitle={props.enteredTitle}
           enteredAmount={props.enteredAmount}
           enteredDate={props.enteredDate}
-          setEnteredItemId={props.setEnteredItemId}
           setEnteredTitle={props.setEnteredTitle}
           setEnteredAmount={props.setEnteredAmount}
           setEnteredDate={props.setEnteredDate}

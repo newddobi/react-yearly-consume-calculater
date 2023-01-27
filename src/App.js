@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
 
@@ -18,9 +18,33 @@ const DUMMY_EXPENSES = [
   },
   {
     id: "e4",
-    title: "New Desk (Wooden)",
-    amount: 450,
+    title: "지코바 치킨",
+    amount: 16000,
+    date: new Date(2021, 5, 13),
+  },
+  {
+    id: "e5",
+    title: "단백질 보충제",
+    amount: 17000,
+    date: new Date(2021, 8, 12),
+  },
+  {
+    id: "e6",
+    title: "다이어리",
+    amount: 10000,
     date: new Date(2021, 5, 12),
+  },
+  {
+    id: "e7",
+    title: "볼펜",
+    amount: 500,
+    date: new Date(2021, 1, 12),
+  },
+  {
+    id: "e8",
+    title: "책",
+    amount: 8000,
+    date: new Date(2021, 7, 12),
   },
 ];
 
@@ -32,6 +56,15 @@ const App = () => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
+
+  useEffect(() => {
+    if (!isEditing) {
+      setEnteredItemId("");
+      setEnteredTitle("");
+      setEnteredAmount("");
+      setEnteredDate("");
+    }
+  }, [isEditing]);
 
   const saveExpenseHandler = (newExpense) => {
     const updateTargetItem = expenses.find(
@@ -94,7 +127,6 @@ const App = () => {
         enteredTitle={enteredTitle}
         enteredAmount={enteredAmount}
         enteredDate={enteredDate}
-        setEnteredItemId={setEnteredItemId}
         setEnteredTitle={setEnteredTitle}
         setEnteredAmount={setEnteredAmount}
         setEnteredDate={setEnteredDate}

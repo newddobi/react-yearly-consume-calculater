@@ -52,10 +52,6 @@ const ExpenseForm = (props) => {
     };
 
     props.onSaveExpenseData(expenseData);
-    props.setEnteredItemId("");
-    props.setEnteredTitle("");
-    props.setEnteredAmount("");
-    props.setEnteredDate("");
   };
 
   const errorHandler = () => {
