@@ -1,29 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
+import FormContext from "../../store/form-context";
 
 import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 
 const NewExpense = (props) => {
+  const formCtx = useContext(FormContext);
+
   const saveExpenseDataHandler = (enteredExpenseData) => {
     props.onAddExpense(enteredExpenseData);
-    props.setIsEditing(false);
+    formCtx.stopEditing();
   };
 
   const startEditingHandler = () => {
-    props.setIsEditing(true);
+    formCtx.startEditing();
   };
 
   const stopEditingHandler = () => {
-    props.setIsEditing(false);
+    formCtx.stopEditing();
   };
 
   return (
     <div className="new-expense">
-      {!props.isEditing && (
+      {!formCtx.isEditing && (
         <button onClick={startEditingHandler}>기록추가</button>
       )}
-      {props.isEditing && (
+      {formCtx.isEditing && (
         <ExpenseForm
+          onCancel={stopEditingHandler}
           enteredItemId={props.enteredItemId}
           enteredTitle={props.enteredTitle}
           enteredAmount={props.enteredAmount}
@@ -32,7 +36,6 @@ const NewExpense = (props) => {
           setEnteredAmount={props.setEnteredAmount}
           setEnteredDate={props.setEnteredDate}
           onSaveExpenseData={saveExpenseDataHandler}
-          onCancel={stopEditingHandler}
         />
       )}
     </div>

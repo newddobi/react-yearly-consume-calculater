@@ -13,12 +13,17 @@ const Expenses = (props) => {
   const [filteredExpenses, setFilteredExpenses] = useState([]);
 
   useEffect(() => {
-    console.log("filtered");
-    setFilteredExpenses(
-      props.items.filter((expense) => {
-        return expense.date.getFullYear().toString() === filteredYear;
-      })
-    );
+    const yeadFiltered = props.items.filter((expense) => {
+      return expense.date.getFullYear().toString() === filteredYear;
+    });
+
+    const monthFiltered = yeadFiltered.filter((expense) => {
+      if (filteredMonth) {
+        return expense.date.getMonth().toString() === filteredMonth;
+      }
+    });
+
+    setFilteredExpenses(yeadFiltered);
   }, [filteredYear, filteredMonth, filteredSort, setFilteredExpenses]);
 
   const filterChangeHandler = (selectedYear) => {
@@ -35,7 +40,6 @@ const Expenses = (props) => {
         <ExpensesChart expenses={filteredExpenses} />
         <ExpensesList
           items={filteredExpenses}
-          setIsEditing={props.setIsEditing}
           onClickItem={props.onClickItem}
           onClickDelete={props.onClickDelete}
         />

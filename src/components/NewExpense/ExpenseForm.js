@@ -1,9 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ErrorModal from "../UI/ErrorModal";
 import "./ExpenseForm.css";
 
 const ExpenseForm = (props) => {
   const [error, setError] = useState(null);
+
+  const titleRef = useRef();
+  const amountRef = useRef();
+  const dateRef = useRef();
+
+  useEffect(() => {
+    if (!error) {
+      if (props.enteredTitle.trim().length === 0) {
+        titleRef.current.focus();
+        return;
+      }
+
+      if (!props.enteredAmount) {
+        amountRef.current.focus();
+        return;
+      }
+
+      if (!props.enteredDate) {
+        dateRef.current.showPicker();
+        return;
+      }
+    }
+  }, [error]);
 
   const titleChangeHandler = (event) => {
     props.setEnteredTitle(event.target.value);
@@ -75,6 +98,7 @@ const ExpenseForm = (props) => {
               type="text"
               value={props.enteredTitle}
               onChange={titleChangeHandler}
+              ref={titleRef}
             />
           </div>
           <div className="new-expense__control">
@@ -85,6 +109,7 @@ const ExpenseForm = (props) => {
               step="0.01"
               value={props.enteredAmount}
               onChange={amountChangeHandler}
+              ref={amountRef}
             />
           </div>
           <div className="new-expense__control">
@@ -95,6 +120,7 @@ const ExpenseForm = (props) => {
               max="2023-12-31"
               value={props.enteredDate}
               onChange={dateChangeHandler}
+              ref={dateRef}
             />
           </div>
         </div>

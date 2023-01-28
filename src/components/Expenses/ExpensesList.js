@@ -12,7 +12,6 @@ const ExpensesList = (props) => {
     <ul className="expenses-list">
       {props.items.map((expense) => (
         <ExpenseItem
-          setIsEditing={props.setIsEditing}
           onClickItem={props.onClickItem}
           onClickDelete={props.onClickDelete}
           key={expense.id}

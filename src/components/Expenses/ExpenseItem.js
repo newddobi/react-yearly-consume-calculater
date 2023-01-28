@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
 import "./ExpenseItem.css";
+import FormContext from "../../store/form-context";
 
 const ExpenseItem = (props) => {
+  const formCtx = useContext(FormContext);
+
   const itemClickHandler = (itemId) => {
-    props.setIsEditing(true);
+    formCtx.startEditing();
     props.onClickItem(itemId);
   };
 
