@@ -65,10 +65,12 @@ const App = () => {
   };
 
   const deleteItemHandler = (selectedItemId) => {
+    console.log("parameter", selectedItemId);
     setExpenses((prevExpenses) => {
       const filteredExpenses = prevExpenses.filter(
         (item) => item.id !== selectedItemId
       );
+      console.log("filteredExpenses", filteredExpenses);
       return filteredExpenses;
     });
   };
