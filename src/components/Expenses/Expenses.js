@@ -8,19 +8,13 @@ import "./Expenses.css";
 
 const Expenses = (props) => {
   const [filteredYear, setFilteredYear] = useState("2021");
-  const [filteredMonth, setFilteredMonth] = useState("");
   const [filteredSort, setFilteredSort] = useState("latest_sort");
+  const [filteredMonth, setFilteredMonth] = useState("");
   const [filteredExpenses, setFilteredExpenses] = useState([]);
 
   useEffect(() => {
     const yeadFiltered = props.items.filter((expense) => {
       return expense.date.getFullYear().toString() === filteredYear;
-    });
-
-    const monthFiltered = yeadFiltered.filter((expense) => {
-      if (filteredMonth) {
-        return expense.date.getMonth().toString() === filteredMonth;
-      }
     });
 
     setFilteredExpenses(yeadFiltered);
